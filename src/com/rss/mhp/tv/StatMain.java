@@ -1,0 +1,257 @@
+package com.rss.mhp.tv;
+
+import java.net.URI;
+
+import com.genesyslab.platform.applicationblocks.commons.Action;
+import com.genesyslab.platform.commons.*;
+import com.genesyslab.platform.commons.collections.KeyValueCollection;
+import com.genesyslab.platform.commons.protocol.Endpoint;
+import com.genesyslab.platform.commons.protocol.Message;
+import com.genesyslab.platform.commons.protocol.ProtocolException;
+import com.genesyslab.platform.commons.protocol.RegistrationException;
+import com.genesyslab.platform.management.protocol.*;
+import com.genesyslab.platform.management.protocol.solutioncontrolserver.requests.applications.RequestGetApplicationInfo;
+import com.genesyslab.platform.reporting.protocol.StatServerProtocol;
+import com.genesyslab.platform.reporting.protocol.statserver.Notification;
+import com.genesyslab.platform.reporting.protocol.statserver.NotificationMode;
+import com.genesyslab.platform.reporting.protocol.statserver.StatisticMetric;
+import com.genesyslab.platform.reporting.protocol.statserver.StatisticObject;
+import com.genesyslab.platform.reporting.protocol.statserver.StatisticObjectType;
+import com.genesyslab.platform.reporting.protocol.statserver.requests.RequestOpenStatistic;
+import com.genesyslab.platform.voice.protocol.ConnectionId;
+import com.genesyslab.platform.voice.protocol.TServerProtocol;
+import com.genesyslab.platform.voice.protocol.tserver.TimeStamp;
+import com.genesyslab.platform.voice.protocol.tserver.events.EventACK;
+import com.genesyslab.platform.voice.protocol.tserver.events.EventAbandoned;
+import com.genesyslab.platform.voice.protocol.tserver.events.EventAddressInfo;
+import com.genesyslab.platform.voice.protocol.tserver.events.EventDialing;
+import com.genesyslab.platform.voice.protocol.tserver.events.EventDiverted;
+import com.genesyslab.platform.voice.protocol.tserver.events.EventError;
+import com.genesyslab.platform.voice.protocol.tserver.events.EventEstablished;
+import com.genesyslab.platform.voice.protocol.tserver.events.EventHeld;
+import com.genesyslab.platform.voice.protocol.tserver.events.EventLinkConnected;
+import com.genesyslab.platform.voice.protocol.tserver.events.EventLinkDisconnected;
+import com.genesyslab.platform.voice.protocol.tserver.events.EventReleased;
+import com.genesyslab.platform.voice.protocol.tserver.events.EventRetrieved;
+import com.genesyslab.platform.voice.protocol.tserver.events.EventRinging;
+import com.genesyslab.platform.voice.protocol.tserver.events.EventRouteRequest;
+import com.genesyslab.platform.voice.protocol.tserver.events.EventRouteUsed;
+import com.genesyslab.platform.voice.protocol.tserver.events.EventServerInfo;
+import com.genesyslab.platform.voice.protocol.tserver.events.EventSwitchInfo;
+
+
+/**
+ * @author Dinesh Appavoo
+ *
+ */
+
+public  class StatMain {
+
+	public StatMain()
+	{}
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+		StatMain dmain = new StatMain();
+		dmain.init();
+
+
+	}
+
+	public static void init()
+	{
+		try {
+
+			Endpoint ep = new Endpoint("cctp_ss_pulse_a","hidf321.hydc.sbc.com",3227);
+			StatServerProtocol scp = new StatServerProtocol(ep);
+			scp.setClientId(101);
+			scp.setClientName("RA7353");
+
+			scp.open();
+
+			MessageReceivers msgReceiver = new MessageReceivers(scp);
+
+			Thread.sleep(2000);
+/////////// REQUEST-1
+
+			RequestOpenStatistic ros = RequestOpenStatistic.create();
+
+			StatisticObject so = StatisticObject.create();
+			so.setObjectId("iw_ra7353");
+			so.setObjectType(StatisticObjectType.Agent);
+			so.setTenantName("Resources");
+			so.setTenantPassword("");
+			ros.setStatisticObject(so);
+
+			StatisticMetric sm = StatisticMetric.create("Total_Login_Time");
+			sm.setTimeProfile("Default");
+			sm.setTimeRange("");
+			sm.setFilter("");
+			ros.setStatisticMetric(sm);
+
+			Notification not = Notification.create();
+			not.setMode(NotificationMode.Periodical);
+			not.setFrequency(10);
+			ros.setNotification(not);
+
+			ros.setReferenceId(99);
+
+			scp.send(ros);
+
+	///////// REQUEST-2
+
+RequestOpenStatistic ros2 = RequestOpenStatistic.create();
+
+			StatisticObject so2 = StatisticObject.create();
+			so2.setObjectId("iw_ra7353");
+			so2.setObjectType(StatisticObjectType.Agent);
+			so2.setTenantName("Resources");
+			so2.setTenantPassword("");
+			ros2.setStatisticObject(so2);
+
+			StatisticMetric sm2 = StatisticMetric.create("Total_Wait_Time");
+			sm2.setTimeProfile("Default");
+			sm2.setTimeRange("");
+			sm2.setFilter("");
+			ros2.setStatisticMetric(sm2);
+
+			Notification not2 = Notification.create();
+			not2.setMode(NotificationMode.Periodical);
+			not2.setFrequency(10);
+			ros2.setNotification(not2);
+
+			ros2.setReferenceId(98);
+
+			scp.send(ros2);
+
+
+///////// REQUEST-3
+
+			RequestOpenStatistic ros3 = RequestOpenStatistic.create();
+
+						StatisticObject so3 = StatisticObject.create();
+						so3.setObjectId("VQ_AGENT_TEST@Sip_Switch_Agent");
+						so3.setObjectType(StatisticObjectType.Queue);
+						so3.setTenantName("Resources");
+						so3.setTenantPassword("");
+						ros3.setStatisticObject(so3);
+
+						StatisticMetric sm3 = StatisticMetric.create("CurrNumberWaitingCalls");
+						sm3.setTimeProfile("Default");
+						sm3.setTimeRange("");
+						sm3.setFilter("");
+						ros3.setStatisticMetric(sm3);
+
+						Notification not3 = Notification.create();
+						not3.setMode(NotificationMode.Periodical);
+						not3.setFrequency(10);
+						ros3.setNotification(not3);
+
+						ros3.setReferenceId(97);
+
+						scp.send(ros3);
+
+///////// REQUEST-4
+
+	RequestOpenStatistic ros4 = RequestOpenStatistic.create();
+
+				StatisticObject so4 = StatisticObject.create();
+				so4.setObjectId("VQ_AGENT_TEST@Sip_Switch_Agent");
+				so4.setObjectType(StatisticObjectType.Queue);
+				so4.setTenantName("Resources");
+				so4.setTenantPassword("");
+				ros4.setStatisticObject(so4);
+
+				StatisticMetric sm4 = StatisticMetric.create("CustMaxCallWaitingTime");
+				sm4.setTimeProfile("Default");
+				sm4.setTimeRange("");
+				sm4.setFilter("");
+				ros4.setStatisticMetric(sm4);
+
+				Notification not4 = Notification.create();
+				not4.setMode(NotificationMode.Periodical);
+				not4.setFrequency(10);
+				ros4.setNotification(not4);
+
+				ros4.setReferenceId(96);
+
+				scp.send(ros4);
+
+		} catch (RegistrationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ProtocolException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void handle(final Message message) {
+		// Some user-specific work...
+		System.out.println( "DashBoard::handleResponse() message = "+message.messageName());
+		System.out.println( "DashBoard::handleResponse() message Content = "+message.toString());
+	}
+
+}
+
+class MessageReceivers extends Thread {
+
+	Thread tRecv = null;
+	StatServerProtocol tp = null;
+
+
+	MessageReceivers(StatServerProtocol serverProtocol) {
+		tp = serverProtocol;
+		System.out.println("Thread|Dashboard:MessageReceiver() Initializing MessageReceiver Thread...");
+		tRecv = new Thread(this, "RECEIVER");
+		tRecv.start();
+	}
+
+	// This method will receive all messages:
+	public void run() {
+		System.out.println("Thread|Dashboard::MessageReceiver:run() Starting MessageReceiver Thread...");
+		while (true) {
+			try {
+				Message message = tp.receive();
+				if (message != null)
+					handleMessage(message);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+
+	private void handleMessage(Message message) {
+		// Some user-specific work...
+		try {
+
+			ConnectionId cid = null;// = ea.getConnID();
+			KeyValueCollection kve = null;// = ea.getExtensions();
+			KeyValueCollection kvu = null;// = ea.getUserData();
+
+			switch (message.messageId()) {
+			case EventACK.ID:
+				System.out.println( "Thread|Dashboard::MessageReceiver:handleMessage() MsgRecv ACK...");
+
+				break;
+
+			default:
+				System.out.println( "Thread|Dashboard::MessageReceiver:handleMessage() MsgRecv ="+message.messageName());
+				System.out.println( "Thread|Dashboard::MessageReceiver:handleMessage() Content ="+message.toString());
+				break;
+
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+}
