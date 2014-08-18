@@ -1,6 +1,5 @@
-package com.rss.mhp.tv;
-
 import java.net.URI;
+import java.util.ArrayList;
 
 import com.genesyslab.platform.applicationblocks.commons.Action;
 import com.genesyslab.platform.commons.*;
@@ -40,10 +39,7 @@ import com.genesyslab.platform.voice.protocol.tserver.events.EventServerInfo;
 import com.genesyslab.platform.voice.protocol.tserver.events.EventSwitchInfo;
 
 
-/**
- * @author Dinesh Appavoo
- *
- */
+
 
 public  class StatMain {
 
@@ -63,10 +59,10 @@ public  class StatMain {
 	{
 		try {
 
-			Endpoint ep = new Endpoint("cctp_ss_pulse_a","hidf321.hydc.sbc.com",3227);
+			Endpoint ep = new Endpoint("stat_server_pulse_pri","10.55.11.61",3211);
 			StatServerProtocol scp = new StatServerProtocol(ep);
 			scp.setClientId(101);
-			scp.setClientName("RA7353");
+			scp.setClientName("c828850");
 
 			scp.open();
 
@@ -78,13 +74,13 @@ public  class StatMain {
 			RequestOpenStatistic ros = RequestOpenStatistic.create();
 
 			StatisticObject so = StatisticObject.create();
-			so.setObjectId("iw_ra7353");
+			so.setObjectId("NJNonCRMAgent2");
 			so.setObjectType(StatisticObjectType.Agent);
 			so.setTenantName("Resources");
 			so.setTenantPassword("");
 			ros.setStatisticObject(so);
 
-			StatisticMetric sm = StatisticMetric.create("Total_Login_Time");
+			StatisticMetric sm = StatisticMetric.create("AverHandleStatusTime");
 			sm.setTimeProfile("Default");
 			sm.setTimeRange("");
 			sm.setFilter("");
@@ -92,7 +88,7 @@ public  class StatMain {
 
 			Notification not = Notification.create();
 			not.setMode(NotificationMode.Periodical);
-			not.setFrequency(10);
+			not.setFrequency(60);
 			ros.setNotification(not);
 
 			ros.setReferenceId(99);
@@ -101,16 +97,16 @@ public  class StatMain {
 
 	///////// REQUEST-2
 
-RequestOpenStatistic ros2 = RequestOpenStatistic.create();
+            RequestOpenStatistic ros2 = RequestOpenStatistic.create();
 
 			StatisticObject so2 = StatisticObject.create();
-			so2.setObjectId("iw_ra7353");
+			so2.setObjectId("NJNonCRMAgent2");
 			so2.setObjectType(StatisticObjectType.Agent);
 			so2.setTenantName("Resources");
 			so2.setTenantPassword("");
 			ros2.setStatisticObject(so2);
 
-			StatisticMetric sm2 = StatisticMetric.create("Total_Wait_Time");
+			StatisticMetric sm2 = StatisticMetric.create("TotalLoginTime");
 			sm2.setTimeProfile("Default");
 			sm2.setTimeRange("");
 			sm2.setFilter("");
@@ -118,7 +114,7 @@ RequestOpenStatistic ros2 = RequestOpenStatistic.create();
 
 			Notification not2 = Notification.create();
 			not2.setMode(NotificationMode.Periodical);
-			not2.setFrequency(10);
+			not2.setFrequency(60);
 			ros2.setNotification(not2);
 
 			ros2.setReferenceId(98);
@@ -131,13 +127,13 @@ RequestOpenStatistic ros2 = RequestOpenStatistic.create();
 			RequestOpenStatistic ros3 = RequestOpenStatistic.create();
 
 						StatisticObject so3 = StatisticObject.create();
-						so3.setObjectId("VQ_AGENT_TEST@Sip_Switch_Agent");
-						so3.setObjectType(StatisticObjectType.Queue);
+						so3.setObjectId("NJNonCRMAgent2");
+						so3.setObjectType(StatisticObjectType.Agent);
 						so3.setTenantName("Resources");
 						so3.setTenantPassword("");
 						ros3.setStatisticObject(so3);
 
-						StatisticMetric sm3 = StatisticMetric.create("CurrNumberWaitingCalls");
+						StatisticMetric sm3 = StatisticMetric.create("CurrentAgentState");
 						sm3.setTimeProfile("Default");
 						sm3.setTimeRange("");
 						sm3.setFilter("");
@@ -145,7 +141,7 @@ RequestOpenStatistic ros2 = RequestOpenStatistic.create();
 
 						Notification not3 = Notification.create();
 						not3.setMode(NotificationMode.Periodical);
-						not3.setFrequency(10);
+						not3.setFrequency(60);
 						ros3.setNotification(not3);
 
 						ros3.setReferenceId(97);
@@ -157,13 +153,13 @@ RequestOpenStatistic ros2 = RequestOpenStatistic.create();
 	RequestOpenStatistic ros4 = RequestOpenStatistic.create();
 
 				StatisticObject so4 = StatisticObject.create();
-				so4.setObjectId("VQ_AGENT_TEST@Sip_Switch_Agent");
-				so4.setObjectType(StatisticObjectType.Queue);
+				so4.setObjectId("NJNonCRMAgent2");
+				so4.setObjectType(StatisticObjectType.Agent);
 				so4.setTenantName("Resources");
 				so4.setTenantPassword("");
 				ros4.setStatisticObject(so4);
 
-				StatisticMetric sm4 = StatisticMetric.create("CustMaxCallWaitingTime");
+				StatisticMetric sm4 = StatisticMetric.create("TotalNumberConsultCalls");
 				sm4.setTimeProfile("Default");
 				sm4.setTimeRange("");
 				sm4.setFilter("");
@@ -171,7 +167,7 @@ RequestOpenStatistic ros2 = RequestOpenStatistic.create();
 
 				Notification not4 = Notification.create();
 				not4.setMode(NotificationMode.Periodical);
-				not4.setFrequency(10);
+				not4.setFrequency(60);
 				ros4.setNotification(not4);
 
 				ros4.setReferenceId(96);
@@ -236,17 +232,26 @@ class MessageReceivers extends Thread {
 			ConnectionId cid = null;// = ea.getConnID();
 			KeyValueCollection kve = null;// = ea.getExtensions();
 			KeyValueCollection kvu = null;// = ea.getUserData();
+			String messageString="";
+			String callStat="";
 
 			switch (message.messageId()) {
 			case EventACK.ID:
-				System.out.println( "Thread|Dashboard::MessageReceiver:handleMessage() MsgRecv ACK...");
+				//System.out.println( "Thread|Dashboard::MessageReceiver:handleMessage() MsgRecv ACK...");
 
 				break;
 
 			default:
-				System.out.println( "Thread|Dashboard::MessageReceiver:handleMessage() MsgRecv ="+message.messageName());
-				System.out.println( "Thread|Dashboard::MessageReceiver:handleMessage() Content ="+message.toString());
+				if(message.messageName().equalsIgnoreCase("EventInfo"))
+				{
+				messageString=message.toString();
+				StatResponseMessageHandler.handleStatEventInfoMessage(messageString);
 				break;
+				
+				}else {
+					
+				}
+				
 
 			}
 		} catch (Exception e) {
