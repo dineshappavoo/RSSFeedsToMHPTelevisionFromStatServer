@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.rss.mhp.tv;
+package test;
 
 import java.io.File;
 import java.io.StringWriter;
@@ -22,7 +22,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 /**
- * @author Dinesh Appavoo
+ * @author b030513
  *
  */
 public class GenerateRSSFeedXML {
@@ -35,16 +35,22 @@ public class GenerateRSSFeedXML {
 	public static void main(String[] args) throws ParserConfigurationException, TransformerException {
 		
 		ArrayList<Item> itemList=new ArrayList<Item>();
-		itemList.add(new Item("Call Stats for July 3, 2014", "http://abcd.com/ACDStats/CP", "Call Stats Answered Calls: 237 Calls Waiting: 2 Longest Call 1:04", "Tue, 26 Oct 2004 14:06:44 -0500"));
-		itemList.add(new Item("2014 Year-to-date Call Stats", "http://abcd.com/ACDStats/CP", "2014 YTD Answered Calls: 237 Calls Waiting: 2 Longest Call 1:04", "Tue, 26 Oct 2004 14:06:44 -0500"));
+		itemList.add(new Item("Call Stats for July 3, 2014", "http://bnsfweb.bnsf.com/ACDStats/CP", "Call Stats Answered Calls: 237 Calls Waiting: 2 Longest Call 1:04", "Tue, 26 Oct 2004 14:06:44 -0500"));
+		itemList.add(new Item("2014 Year-to-date Call Stats", "http://bnsfweb.bnsf.com/ACDStats/CP", "2014 YTD Answered Calls: 237 Calls Waiting: 2 Longest Call 1:04", "Tue, 26 Oct 2004 14:06:44 -0500"));
 		
-		String xml=new GenerateRSSFeedXML().generateXMLforRSSFeed(new RSSFeed("ACD Call Stats for Consumer Products", "http://abcd.com/ACDStats/CP", "Call Stats for Consumer Products", "Tue, 26 Oct 2004 14:06:44 -0500", "Mon, 1 Nov 2004 13:17:17 -0500", itemList));
+		String xml=GenerateRSSFeedXML.generateXMLforRSSFeed(new RSSFeed("ACD Call Stats for Consumer Products", "http://bnsfweb.bnsf.com/ACDStats/CP", "Call Stats for Consumer Products", "Tue, 26 Oct 2004 14:06:44 -0500", "Mon, 1 Nov 2004 13:17:17 -0500", itemList));
 
 		System.out.println(xml);
 	}
 	
-	
-	public String generateXMLforRSSFeed(RSSFeed rssFeed) throws ParserConfigurationException, TransformerException
+	/**
+	 * Method to generate RSS feed XML the stat server message
+	 * @param rssFeed
+	 * @return
+	 * @throws ParserConfigurationException
+	 * @throws TransformerException
+	 */
+	public static String generateXMLforRSSFeed(RSSFeed rssFeed) throws ParserConfigurationException, TransformerException
 	{
 		DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder documentBuilder = documentFactory.newDocumentBuilder();
