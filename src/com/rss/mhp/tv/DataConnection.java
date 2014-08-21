@@ -1,7 +1,7 @@
 /**
  * 
  */
-package test;
+package com.rss.mhp.tv;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
