@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
- * @author B030513
+ * @author Dinesh Appavoo
  *
  */
 public class DMOperations {
