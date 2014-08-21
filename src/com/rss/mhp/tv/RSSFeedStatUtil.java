@@ -1,7 +1,7 @@
 /**
  * 
  */
-package test;
+package com.rss.mhp.tv;
 
 /**
  * @author b030513
