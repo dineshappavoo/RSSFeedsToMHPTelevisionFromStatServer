@@ -1,3 +1,4 @@
+package com.rss.mhp.tv;
 import java.net.URI;
 import java.util.ArrayList;
 
