@@ -50,9 +50,9 @@ public class DataConnection {
 		}
 	}
 
-	public String getXMlFileName(String sObjectID)
+	public static ArrayList<String> getXMlFileNames(String sObjectID)
 	{
-		String sXMlFileName="";
+		ArrayList<String> sXMlFileNames;
 		Connection con=null;
 		Statement stt=null;
 		try {
@@ -65,12 +65,13 @@ public class DataConnection {
 			stt= con.createStatement();
 			stt.execute(query);
 			ResultSet rs = stt.getResultSet();
+			sXMlFileNames=new ArrayList<String>();
 			while((rs!=null) && (rs.next()))
 			{
-				sXMlFileName=rs.getString(1);
+				sXMlFileNames.add(rs.getString(1));
 			}
 
-			return sXMlFileName;
+			return sXMlFileNames;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
