@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * @author Dinesh Appavoo
@@ -23,9 +24,9 @@ public class DMOperations {
 
 	}
 	
-	public static ArrayList<String> getXMlFileName()
+	public static HashMap<String, String> getXMlFileName()
 	{
-		ArrayList<String> sXMlFileNames;
+		HashMap<String, String> hQueueXMlFileMap;
 		Connection con=null;
 		Statement stt=null;
 		try {
@@ -33,18 +34,18 @@ public class DMOperations {
 
 			con=DataConnection.getConnection();
 
-			String query="select XML_File_Name from QConfig";	
+			String query="select * from QConfig";	
 
 			stt= con.createStatement();
 			stt.execute(query);
 			ResultSet rs = stt.getResultSet();
-			sXMlFileNames=new ArrayList<String>();
+			hQueueXMlFileMap=new HashMap<String, String>();
 			while((rs!=null) && (rs.next()))
 			{
-				sXMlFileNames.add(rs.getString(1));
+				hQueueXMlFileMap.put(rs.getString(1),rs.getString(2));
 			}
 
-			return sXMlFileNames;
+			return hQueueXMlFileMap;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
