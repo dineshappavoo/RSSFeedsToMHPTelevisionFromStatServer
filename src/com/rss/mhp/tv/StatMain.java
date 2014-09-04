@@ -48,15 +48,17 @@ public  class StatMain {
 	{}
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 
-		StatMain dmain = new StatMain();
-		dmain.init();
-
-
+		initilizeRequestProcessing("NJNonCRMAgent2","NJNonCRMAgent2_XML");
 	}
 
-	public static void init()
+	public static void initilizeRequestProcessing(String sQueueName,String sXMLName)
+	{
+		StatMain dmain = new StatMain();
+		dmain.init(sQueueName);
+	}
+	
+	public static void init(String sQueueName)
 	{
 		try {
 
