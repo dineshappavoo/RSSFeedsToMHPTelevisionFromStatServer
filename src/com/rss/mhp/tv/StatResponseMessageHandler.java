@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.rss.mhp.tv;
 
 import java.util.ArrayList;
@@ -27,7 +24,7 @@ public class StatResponseMessageHandler {
 	 * @throws ParserConfigurationException
 	 * @throws TransformerException
 	 */
-	public static void handleStatEventInfoMessage(String message) throws ParserConfigurationException, TransformerException
+	public static void handleStatEventInfoMessage(String message, String sXMLFileName) throws ParserConfigurationException, TransformerException
 	{
 		String callStat="";
 		if((message.indexOf("STRING_VALUE [str] = \"")>0)&&(message.indexOf("TM_SERVER [int] =")>0))
@@ -41,7 +38,7 @@ public class StatResponseMessageHandler {
 		itemList.add(new Item("Call Stats for July 3, 2014", "http://bnsfweb.bnsf.com/ACDStats/CP", callStat, "Tue, 26 Oct 2004 14:06:44 -0500"));
 		//itemList.add(new Item("2014 Year-to-date Call Stats", "http://bnsfweb.bnsf.com/ACDStats/CP", callStat, "Tue, 26 Oct 2004 14:06:44 -0500"));
 		
-		String xml= GenerateRSSFeedXML.generateXMLforRSSFeed(new RSSFeed("ACD Call Stats for Consumer Products", "http://bnsfweb.bnsf.com/ACDStats/CP", "Call Stats for Consumer Products", "Tue, 26 Oct 2004 14:06:44 -0500", "Mon, 1 Nov 2004 13:17:17 -0500", itemList));
+		String xml= GenerateRSSFeedXML.generateXMLforRSSFeed(new RSSFeed("ACD Call Stats for Consumer Products", "http://bnsfweb.bnsf.com/ACDStats/CP", "Call Stats for Consumer Products", "Tue, 26 Oct 2004 14:06:44 -0500", "Mon, 1 Nov 2004 13:17:17 -0500", itemList), sXMLFileName);
 		System.out.println(xml);
 	}
 
