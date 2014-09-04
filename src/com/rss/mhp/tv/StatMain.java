@@ -55,10 +55,10 @@ public  class StatMain {
 	public static void initilizeRequestProcessing(String sQueueName,String sXMLName)
 	{
 		StatMain dmain = new StatMain();
-		dmain.init(sQueueName);
+		dmain.init(sQueueName, sXMLName);
 	}
 	
-	public static void init(String sQueueName)
+	public static void init(String sQueueName, String sXMLFileName)
 	{
 		try {
 
@@ -69,7 +69,7 @@ public  class StatMain {
 
 			scp.open();
 
-			MessageReceivers msgReceiver = new MessageReceivers(scp);
+			MessageReceivers msgReceiver = new MessageReceivers(scp, sXMLFileName);
 
 			Thread.sleep(2000);
 /////////// REQUEST-1
@@ -204,12 +204,14 @@ class MessageReceivers extends Thread {
 
 	Thread tRecv = null;
 	StatServerProtocol tp = null;
+	String sXMLFileName="";
 
 
-	MessageReceivers(StatServerProtocol serverProtocol) {
+	MessageReceivers(StatServerProtocol serverProtocol, String sXMLFileName) {
 		tp = serverProtocol;
 		System.out.println("Thread|Dashboard:MessageReceiver() Initializing MessageReceiver Thread...");
 		tRecv = new Thread(this, "RECEIVER");
+		this.sXMLFileName=sXMLFileName;
 		tRecv.start();
 	}
 
@@ -220,7 +222,7 @@ class MessageReceivers extends Thread {
 			try {
 				Message message = tp.receive();
 				if (message != null)
-					handleMessage(message);
+					handleMessage(message, sXMLFileName);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -228,7 +230,7 @@ class MessageReceivers extends Thread {
 		}
 	}
 
-	private void handleMessage(Message message) {
+	private void handleMessage(Message message, String sXMLFileName) {
 		// Some user-specific work...
 		try {
 
@@ -248,7 +250,7 @@ class MessageReceivers extends Thread {
 				if(message.messageName().equalsIgnoreCase("EventInfo"))
 				{
 				messageString=message.toString();
-				StatResponseMessageHandler.handleStatEventInfoMessage(messageString);
+				StatResponseMessageHandler.handleStatEventInfoMessage(messageString, sXMLFileName);
 				break;
 				
 				}else {
