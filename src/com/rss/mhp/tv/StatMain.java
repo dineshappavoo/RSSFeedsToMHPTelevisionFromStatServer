@@ -77,7 +77,7 @@ public  class StatMain {
 			RequestOpenStatistic ros = RequestOpenStatistic.create();
 
 			StatisticObject so = StatisticObject.create();
-			so.setObjectId("NJNonCRMAgent2");
+			so.setObjectId(sQueueName);
 			so.setObjectType(StatisticObjectType.Agent);
 			so.setTenantName("Resources");
 			so.setTenantPassword("");
@@ -103,7 +103,7 @@ public  class StatMain {
             RequestOpenStatistic ros2 = RequestOpenStatistic.create();
 
 			StatisticObject so2 = StatisticObject.create();
-			so2.setObjectId("NJNonCRMAgent2");
+			so2.setObjectId(sQueueName);
 			so2.setObjectType(StatisticObjectType.Agent);
 			so2.setTenantName("Resources");
 			so2.setTenantPassword("");
@@ -130,7 +130,7 @@ public  class StatMain {
 			RequestOpenStatistic ros3 = RequestOpenStatistic.create();
 
 						StatisticObject so3 = StatisticObject.create();
-						so3.setObjectId("NJNonCRMAgent2");
+						so3.setObjectId(sQueueName);
 						so3.setObjectType(StatisticObjectType.Agent);
 						so3.setTenantName("Resources");
 						so3.setTenantPassword("");
@@ -156,7 +156,7 @@ public  class StatMain {
 	RequestOpenStatistic ros4 = RequestOpenStatistic.create();
 
 				StatisticObject so4 = StatisticObject.create();
-				so4.setObjectId("NJNonCRMAgent2");
+				so4.setObjectId(sQueueName);
 				so4.setObjectType(StatisticObjectType.Agent);
 				so4.setTenantName("Resources");
 				so4.setTenantPassword("");
@@ -256,8 +256,6 @@ class MessageReceivers extends Thread {
 				}else {
 					
 				}
-				
-
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
