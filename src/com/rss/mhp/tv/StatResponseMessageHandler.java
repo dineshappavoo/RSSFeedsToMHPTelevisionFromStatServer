@@ -10,6 +10,7 @@ import javax.xml.transform.TransformerException;
  */
 public class StatResponseMessageHandler {
 
+	static ArrayList<Item> itemList=new ArrayList<Item>();
 	/**
 	 * @param args
 	 */
@@ -34,12 +35,15 @@ public class StatResponseMessageHandler {
 		
 		System.out.println("Call Stat Value : "+callStat);
 		
-		ArrayList<Item> itemList=new ArrayList<Item>();
 		itemList.add(new Item("Call Stats for July 3, 2014", "http://bnsfweb.bnsf.com/ACDStats/CP", callStat, "Tue, 26 Oct 2004 14:06:44 -0500"));
 		//itemList.add(new Item("2014 Year-to-date Call Stats", "http://bnsfweb.bnsf.com/ACDStats/CP", callStat, "Tue, 26 Oct 2004 14:06:44 -0500"));
-		
+		if(itemList.size()==4)
+		{
 		String xml= GenerateRSSFeedXML.generateXMLforRSSFeed(new RSSFeed("ACD Call Stats for Consumer Products", "http://bnsfweb.bnsf.com/ACDStats/CP", "Call Stats for Consumer Products", "Tue, 26 Oct 2004 14:06:44 -0500", "Mon, 1 Nov 2004 13:17:17 -0500", itemList), sXMLFileName);
 		System.out.println(xml);
+
+		itemList=new ArrayList<Item>();
+		}
 	}
 
 }
