@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 /**
  * @author Dinesh Appavoo
@@ -22,25 +23,28 @@ public class DMOperations {
 
 	}
 	
-	public String getXMlFileName(String sObjectID)
+	public static ArrayList<String> getXMlFileName()
 	{
-		String sXMlFileName="";
+		ArrayList<String> sXMlFileNames;
 		Connection con=null;
 		Statement stt=null;
 		try {
+
+
 			con=DataConnection.getConnection();
 
-			String query="select XML_File_Name from QConfig where Q_Name="+"\'"+sObjectID+"\'";	
+			String query="select XML_File_Name from QConfig";	
 
 			stt= con.createStatement();
 			stt.execute(query);
 			ResultSet rs = stt.getResultSet();
+			sXMlFileNames=new ArrayList<String>();
 			while((rs!=null) && (rs.next()))
 			{
-				sXMlFileName=rs.getString(1);
+				sXMlFileNames.add(rs.getString(1));
 			}
 
-			return sXMlFileName;
+			return sXMlFileNames;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
