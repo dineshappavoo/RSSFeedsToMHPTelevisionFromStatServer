@@ -4,6 +4,7 @@
 package com.rss.mhp.tv;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * @author Dany
@@ -21,11 +22,14 @@ public class QueueXMLUpdate {
 	
 	public void getRSSFeedForQueues()
 	{
-		ArrayList<String> lQueueNames;
-		lQueueNames=DMOperations.getXMlFileName();
-		for(String queueName : lQueueNames)
+		HashMap<String,String> hQueueXMLFileMap=null;
+		String sXMLFileName="";
+		hQueueXMLFileMap=DMOperations.getXMlFileName();
+		
+		for(String queueName : hQueueXMLFileMap.keySet())
 		{
-			
+			sXMLFileName=hQueueXMLFileMap.get(queueName);
+			StatMain.initilizeRequestProcessing(queueName, sXMLFileName);
 		}
 	}
 
