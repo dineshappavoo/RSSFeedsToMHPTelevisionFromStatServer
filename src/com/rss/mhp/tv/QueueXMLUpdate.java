@@ -29,7 +29,7 @@ public class QueueXMLUpdate {
 		for(String queueName : hQueueXMLFileMap.keySet())
 		{
 			sXMLFileName=hQueueXMLFileMap.get(queueName);
-			StatMain.initilizeRequestProcessing(queueName, sXMLFileName);
+				StatMain.initilizeRequestProcessing(queueName, sXMLFileName);
 		}
 	}
 
