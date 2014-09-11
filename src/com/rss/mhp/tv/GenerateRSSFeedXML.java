@@ -119,7 +119,7 @@ public class GenerateRSSFeedXML {
 		
 		//Prepare String writer source
 		StringWriter result=new StringWriter();
-		StreamResult streamResult = new StreamResult(new File("D:\\XMLFILE.xml"));
+		StreamResult streamResult = new StreamResult(new File("D:\\"+sXMLFileName+".xml"));
 		StreamResult stringStreamResult = new StreamResult(result);
 
 
