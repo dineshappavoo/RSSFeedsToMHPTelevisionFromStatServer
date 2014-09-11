@@ -34,7 +34,7 @@ public class DMOperations {
 
 			con=DataConnection.getConnection();
 
-			String query="select * from QConfig";	
+			String query="select * from Q_XML_Map";	
 
 			stt= con.createStatement();
 			stt.execute(query);
