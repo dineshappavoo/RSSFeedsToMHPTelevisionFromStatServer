@@ -19,7 +19,7 @@ public class QueueXMLUpdate extends Thread{
 
 	public static void main(String[] args) {
 
-		new QueueXMLUpdate().getRSSFeedForQueues();
+		new QueueXMLUpdate();
 	}
 	
 	public QueueXMLUpdate()
