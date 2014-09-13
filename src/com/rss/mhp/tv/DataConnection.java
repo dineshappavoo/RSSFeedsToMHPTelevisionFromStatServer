@@ -60,7 +60,7 @@ public class DataConnection {
 
 			con=DataConnection.getConnection();
 
-			String query="select XML_File_Name from QConfig where Q_Name="+"\'"+sObjectID+"\'";	
+			String query="select * from Q_XML_Map";	
 
 			stt= con.createStatement();
 			stt.execute(query);
